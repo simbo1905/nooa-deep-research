@@ -1,0 +1,16 @@
+{
+  "user_question": "tell me about the swarmforge project by uncle robert martin",
+  "resolved_entity": {
+    "canonical_name": "unclebob/swarm-forge",
+    "canonical_url": "https://github.com/unclebob/swarm-forge",
+    "disambiguation_reason": "The GitHub repository matches Robert C. Martin (Uncle Bob); military and commercial lookalikes do not."
+  },
+  "research_budget": {
+    "max_subtopics": 5,
+    "max_queries_per_subtopic": 1
+  },
+  "golden_bridge": {
+    "expected_shape": "A concise project overview, not an invented deep comparative study.",
+    "empty_lane_example": "If no credible independent coverage is in a media/impact lane, return that lane as empty rather than duplicating repository facts."
+  }
+}

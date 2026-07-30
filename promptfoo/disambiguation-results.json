@@ -1,0 +1,599 @@
+{
+  "evalId": "eval-kB6-2026-07-30T21:49:00",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-07-30T21:49:00.271Z",
+    "prompts": [
+      {
+        "raw": "Given the user question and Tavily search capture below, select the entity the user most likely means.\n\nUser question: {{user_question}}\n\nSearch capture:\n{{tavily_capture}}\n\nReturn JSON only with `canonical_name`, `canonical_url`, and `reason`.",
+        "label": "prompts/disambiguate-baseline.txt: Given the user question and Tavily search capture below, select the entity the user most likely means.\n\nUser question: {{user_question}}\n\nSearch capture:\n{{tavily_capture}}\n\nReturn JSON only with `canonical_name`, `canonical_url`, and `reason`.",
+        "id": "1f275deb00b4ba89c3bf06f6b89a66a0e40ffee86676a3b934deabfd9411d4a2",
+        "provider": "openai:chat:mistral-medium-3.5-128b",
+        "metrics": {
+          "score": 1,
+          "testPassCount": 1,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 4,
+          "assertFailCount": 0,
+          "totalLatencyMs": 1604,
+          "tokenUsage": {
+            "prompt": 508,
+            "completion": 96,
+            "cached": 0,
+            "total": 604,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      },
+      {
+        "raw": "You are the target-disambiguation stage of a research agent. Resolve the user's intent before research planning; do not treat the highest-scoring spelling match as sufficient evidence.\n\nUser question: {{user_question}}\n\nTavily capture:\n{{tavily_capture}}\n\nSelect exactly one intended entity. Use the user's clues, including malformed spelling, casing, and people named in the question. Reject lookalikes when their domain is defense/drone activity or a distinct commercial product.\n\nReturn JSON only in this schema:\n{\n  \"canonical_name\": \"string\",\n  \"canonical_url\": \"https URL\",\n  \"reason\": \"brief evidence-based explanation\",\n  \"rejected_urls\": [\"https URL\"]\n}",
+        "label": "prompts/disambiguate-gated.txt: You are the target-disambiguation stage of a research agent. Resolve the user's intent before research planning; do not treat the highest-scoring spelling match as sufficient evidence.\n\nUser question: {{user_question}}\n\nTavily capture:\n{{tavily_capture}}\n\nSelect exactly one intended entity. Use the user's clues, including malformed spelling, casing, and people named in the question. Reject lookalikes when their domain is defense/drone activity or a distinct commercial product.\n\nReturn JSON only in this schema:\n{\n  \"canonical_name\": \"string\",\n  \"canonical_url\": \"https URL\",\n  \"reason\": \"brief evidence-based explanation\",\n  \"rejected_urls\": [\"https URL\"]\n}",
+        "id": "fb056ae60ce1b71a1d43441d74a69e8e4a58315c4cc91b3064654ff24644baf8",
+        "provider": "openai:chat:mistral-medium-3.5-128b",
+        "metrics": {
+          "score": 1,
+          "testPassCount": 1,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 4,
+          "assertFailCount": 0,
+          "totalLatencyMs": 3453,
+          "tokenUsage": {
+            "prompt": 603,
+            "completion": 216,
+            "cached": 0,
+            "total": 819,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn result.canonical_url === 'https://github.com/unclebob/swarm-forge';\n"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn /Robert|Uncle Bob|github/i.test(result.reason || '');\n"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "if (!context.prompt.label?.includes('gated')) return true;\nconst result = JSON.parse(output);\nreturn Array.isArray(result.rejected_urls) && result.rejected_urls.some((url) => /forbes|tradewindai|defensescoop|swarmforge\\.ai/.test(url));\n"
+              }
+            }
+          ]
+        },
+        "id": "851bbe4e-3fc8-4442-8c28-8f74e1bc2ad2",
+        "latencyMs": 1604,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Given the user question and Tavily search capture below, select the entity the user most likely means.\n\nUser question: tell me about the swarmforge project by uncle robert martin\n\nSearch capture:\n{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}\n\nReturn JSON only with `canonical_name`, `canonical_url`, and `reason`.",
+          "label": "prompts/disambiguate-baseline.txt: Given the user question and Tavily search capture below, select the entity the user most likely means.\n\nUser question: {{user_question}}\n\nSearch capture:\n{{tavily_capture}}\n\nReturn JSON only with `canonical_name`, `canonical_url`, and `reason`.",
+          "config": {}
+        },
+        "promptId": "1f275deb00b4ba89c3bf06f6b89a66a0e40ffee86676a3b934deabfd9411d4a2",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openai:chat:mistral-medium-3.5-128b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"canonical_name\": \"SwarmForge by Uncle Bob Martin\",\n  \"canonical_url\": \"https://github.com/unclebob/swarm-forge\",\n  \"reason\": \"The user explicitly mentions 'Uncle Robert Martin' (commonly known as Uncle Bob), and the GitHub repository under his username matches the project name 'swarm-forge'. The other results are unrelated (military or commercial projects).\"\n}",
+          "tokenUsage": {
+            "total": 604,
+            "prompt": 508,
+            "completion": 96,
+            "numRequests": 1
+          },
+          "cached": false,
+          "latencyMs": 1604,
+          "finishReason": "stop",
+          "guardrails": {
+            "flagged": false
+          },
+          "metadata": {
+            "http": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+                "access-control-allow-methods": "GET, POST, OPTIONS",
+                "access-control-allow-origin": "*",
+                "content-type": "application/json",
+                "date": "Thu, 30 Jul 2026 21:48:59 GMT",
+                "server": "envoy",
+                "transfer-encoding": "chunked",
+                "x-envoy-upstream-service-time": "1482",
+                "x-ratelimit-limit-requests": "[REDACTED]",
+                "x-ratelimit-limit-tokens": "[REDACTED]",
+                "x-ratelimit-remaining-requests": "[REDACTED]",
+                "x-ratelimit-remaining-tokens": "[REDACTED]",
+                "x-ratelimit-reset-requests": "[REDACTED]",
+                "x-ratelimit-reset-tokens": "[REDACTED]",
+                "x-request-id": "[REDACTED]"
+              }
+            }
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Uncle Robert Martin resolves to the GitHub project, not a same-name lookalike",
+          "vars": {
+            "tavily_capture": "{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}",
+            "user_question": "tell me about the swarmforge project by uncle robert martin"
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn result.canonical_url === 'https://github.com/unclebob/swarm-forge';\n"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn /Robert|Uncle Bob|github/i.test(result.reason || '');\n"
+            },
+            {
+              "type": "javascript",
+              "value": "if (!context.prompt.label?.includes('gated')) return true;\nconst result = JSON.parse(output);\nreturn Array.isArray(result.rejected_urls) && result.rejected_urls.some((url) => /forbes|tradewindai|defensescoop|swarmforge\\.ai/.test(url));\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 508,
+          "completion": 96,
+          "cached": 0,
+          "total": 604,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "tavily_capture": "{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}",
+          "user_question": "tell me about the swarmforge project by uncle robert martin"
+        },
+        "metadata": {
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "headers": {
+              "access-control-allow-credentials": "true",
+              "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+              "access-control-allow-methods": "GET, POST, OPTIONS",
+              "access-control-allow-origin": "*",
+              "content-type": "application/json",
+              "date": "Thu, 30 Jul 2026 21:48:59 GMT",
+              "server": "envoy",
+              "transfer-encoding": "chunked",
+              "x-envoy-upstream-service-time": "1482",
+              "x-ratelimit-limit-requests": "[REDACTED]",
+              "x-ratelimit-limit-tokens": "[REDACTED]",
+              "x-ratelimit-remaining-requests": "[REDACTED]",
+              "x-ratelimit-remaining-tokens": "[REDACTED]",
+              "x-ratelimit-reset-requests": "[REDACTED]",
+              "x-ratelimit-reset-tokens": "[REDACTED]",
+              "x-request-id": "[REDACTED]"
+            }
+          },
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn result.canonical_url === 'https://github.com/unclebob/swarm-forge';\n"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn /Robert|Uncle Bob|github/i.test(result.reason || '');\n"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "if (!context.prompt.label?.includes('gated')) return true;\nconst result = JSON.parse(output);\nreturn Array.isArray(result.rejected_urls) && result.rejected_urls.some((url) => /forbes|tradewindai|defensescoop|swarmforge\\.ai/.test(url));\n"
+              }
+            }
+          ]
+        },
+        "id": "223a9e16-7e23-410d-addc-21678a439f88",
+        "latencyMs": 3453,
+        "namedScores": {},
+        "prompt": {
+          "raw": "You are the target-disambiguation stage of a research agent. Resolve the user's intent before research planning; do not treat the highest-scoring spelling match as sufficient evidence.\n\nUser question: tell me about the swarmforge project by uncle robert martin\n\nTavily capture:\n{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}\n\nSelect exactly one intended entity. Use the user's clues, including malformed spelling, casing, and people named in the question. Reject lookalikes when their domain is defense/drone activity or a distinct commercial product.\n\nReturn JSON only in this schema:\n{\n  \"canonical_name\": \"string\",\n  \"canonical_url\": \"https URL\",\n  \"reason\": \"brief evidence-based explanation\",\n  \"rejected_urls\": [\"https URL\"]\n}",
+          "label": "prompts/disambiguate-gated.txt: You are the target-disambiguation stage of a research agent. Resolve the user's intent before research planning; do not treat the highest-scoring spelling match as sufficient evidence.\n\nUser question: {{user_question}}\n\nTavily capture:\n{{tavily_capture}}\n\nSelect exactly one intended entity. Use the user's clues, including malformed spelling, casing, and people named in the question. Reject lookalikes when their domain is defense/drone activity or a distinct commercial product.\n\nReturn JSON only in this schema:\n{\n  \"canonical_name\": \"string\",\n  \"canonical_url\": \"https URL\",\n  \"reason\": \"brief evidence-based explanation\",\n  \"rejected_urls\": [\"https URL\"]\n}",
+          "config": {}
+        },
+        "promptId": "fb056ae60ce1b71a1d43441d74a69e8e4a58315c4cc91b3064654ff24644baf8",
+        "promptIdx": 1,
+        "provider": {
+          "id": "openai:chat:mistral-medium-3.5-128b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"canonical_name\": \"SwarmForge by Uncle Bob Martin\",\n  \"canonical_url\": \"https://github.com/unclebob/swarm-forge\",\n  \"reason\": \"The user explicitly references 'Uncle Robert Martin' (commonly known as Uncle Bob), and the GitHub repository under his username matches the project name 'swarm-forge'. The other results are unrelated (defense/drone projects or a commercial AI product).\",\n  \"rejected_urls\": [\n    \"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\n    \"https://www.tradewindai.com/swarm-forge\",\n    \"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\n    \"https://swarmforge.ai\"\n  ]\n}",
+          "tokenUsage": {
+            "total": 819,
+            "prompt": 603,
+            "completion": 216,
+            "numRequests": 1
+          },
+          "cached": false,
+          "latencyMs": 3453,
+          "finishReason": "stop",
+          "guardrails": {
+            "flagged": false
+          },
+          "metadata": {
+            "http": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+                "access-control-allow-methods": "GET, POST, OPTIONS",
+                "access-control-allow-origin": "*",
+                "content-type": "application/json",
+                "date": "Thu, 30 Jul 2026 21:48:59 GMT",
+                "server": "envoy",
+                "transfer-encoding": "chunked",
+                "x-envoy-upstream-service-time": "3300",
+                "x-ratelimit-limit-requests": "[REDACTED]",
+                "x-ratelimit-limit-tokens": "[REDACTED]",
+                "x-ratelimit-remaining-requests": "[REDACTED]",
+                "x-ratelimit-remaining-tokens": "[REDACTED]",
+                "x-ratelimit-reset-requests": "[REDACTED]",
+                "x-ratelimit-reset-tokens": "[REDACTED]",
+                "x-request-id": "[REDACTED]"
+              }
+            }
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Uncle Robert Martin resolves to the GitHub project, not a same-name lookalike",
+          "vars": {
+            "tavily_capture": "{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}",
+            "user_question": "tell me about the swarmforge project by uncle robert martin"
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn result.canonical_url === 'https://github.com/unclebob/swarm-forge';\n"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn /Robert|Uncle Bob|github/i.test(result.reason || '');\n"
+            },
+            {
+              "type": "javascript",
+              "value": "if (!context.prompt.label?.includes('gated')) return true;\nconst result = JSON.parse(output);\nreturn Array.isArray(result.rejected_urls) && result.rejected_urls.some((url) => /forbes|tradewindai|defensescoop|swarmforge\\.ai/.test(url));\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 603,
+          "completion": 216,
+          "cached": 0,
+          "total": 819,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "tavily_capture": "{\"captured_at\":\"2026-07-30\",\"request\":{\"query\":\"what is swarmforge?\",\"search_depth\":\"basic\",\"max_results\":5},\"results\":[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.\",\"score\":0.918663,\"content\":\"SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment\",\"score\":0.88564163,\"content\":\"A military drone demonstration and Pentagon AI initiative named Swarm Forge.\"},{\"url\":\"https://www.tradewindai.com/swarm-forge\",\"title\":\"Swarm Forge Prototype Project | Tradewinds\",\"score\":0.8430832,\"content\":\"A defense solicitation concerning autonomous UAS swarming capabilities.\"},{\"url\":\"https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible\",\"title\":\"Pentagon preparing for drone swarm ‘crucible’\",\"score\":0.83093774,\"content\":\"Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"AI coworkers built for real jobs\",\"score\":0.78393924,\"content\":\"A separate commercial AI coworker product named SwarmForge AI.\"}]}",
+          "user_question": "tell me about the swarmforge project by uncle robert martin"
+        },
+        "metadata": {
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "headers": {
+              "access-control-allow-credentials": "true",
+              "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+              "access-control-allow-methods": "GET, POST, OPTIONS",
+              "access-control-allow-origin": "*",
+              "content-type": "application/json",
+              "date": "Thu, 30 Jul 2026 21:48:59 GMT",
+              "server": "envoy",
+              "transfer-encoding": "chunked",
+              "x-envoy-upstream-service-time": "3300",
+              "x-ratelimit-limit-requests": "[REDACTED]",
+              "x-ratelimit-limit-tokens": "[REDACTED]",
+              "x-ratelimit-remaining-requests": "[REDACTED]",
+              "x-ratelimit-remaining-tokens": "[REDACTED]",
+              "x-ratelimit-reset-requests": "[REDACTED]",
+              "x-ratelimit-reset-tokens": "[REDACTED]",
+              "x-request-id": "[REDACTED]"
+            }
+          },
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 2,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 1111,
+        "completion": 312,
+        "cached": 0,
+        "total": 1423,
+        "numRequests": 2,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 3575,
+      "evaluationDurationMs": 3575
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SwarmForge target-disambiguation digital twin",
+    "prompts": [
+      "file:///Users/Shared/swarm-forge/projects/nooa-deep-research/promptfoo/prompts/disambiguate-baseline.txt",
+      "file:///Users/Shared/swarm-forge/projects/nooa-deep-research/promptfoo/prompts/disambiguate-gated.txt"
+    ],
+    "providers": [
+      {
+        "id": "openai:chat:mistral-medium-3.5-128b",
+        "config": {
+          "apiBaseUrl": "https://api.scaleway.ai/5647c6fe-ecc5-4277-9e5e-9ec56b1ac2c8/v1",
+          "temperature": 0.2,
+          "max_tokens": 800,
+          "response_format": {
+            "type": "json_object"
+          }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "Uncle Robert Martin resolves to the GitHub project, not a same-name lookalike",
+        "vars": {
+          "user_question": "tell me about the swarmforge project by uncle robert martin"
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "javascript",
+            "value": "const result = JSON.parse(output);\nreturn result.canonical_url === 'https://github.com/unclebob/swarm-forge';\n"
+          },
+          {
+            "type": "javascript",
+            "value": "const result = JSON.parse(output);\nreturn /Robert|Uncle Bob|github/i.test(result.reason || '');\n"
+          },
+          {
+            "type": "javascript",
+            "value": "if (!context.prompt.label?.includes('gated')) return true;\nconst result = JSON.parse(output);\nreturn Array.isArray(result.rejected_urls) && result.rejected_urls.some((url) => /forbes|tradewindai|defensescoop|swarmforge\\.ai/.test(url));\n"
+          }
+        ]
+      }
+    ],
+    "env": {},
+    "outputPath": [
+      "disambiguation-results.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.19",
+    "nodeVersion": "v26.5.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-07-30T21:49:03.928Z",
+    "evaluationCreatedAt": "2026-07-30T21:49:00.271Z"
+  },
+  "vars": [
+    "tavily_capture",
+    "user_question"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "showProgressBar": false,
+    "repeat": 1,
+    "maxConcurrency": 4,
+    "cache": true
+  }
+}

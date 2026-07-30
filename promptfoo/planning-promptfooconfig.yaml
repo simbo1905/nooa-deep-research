@@ -1,0 +1,29 @@
+description: SwarmForge bounded-subtopic-planning digital twin
+providers:
+  - id: openai:chat:mistral-medium-3.5-128b
+    config:
+      apiBaseUrl: https://api.scaleway.ai/5647c6fe-ecc5-4277-9e5e-9ec56b1ac2c8/v1
+      temperature: 0.2
+      max_tokens: 800
+      response_format:
+        type: json_object
+prompts:
+  - file://prompts/plan-subtopics-gated.txt
+tests:
+  - description: A simple overview stays bounded and explicitly permits an empty media/impact lane
+    vars:
+      user_question: tell me about the swarmforge project by uncle robert martin
+    assert:
+      - type: is-json
+      - type: javascript
+        value: |
+          const result = JSON.parse(output);
+          return result.research_mode === 'overview' && Array.isArray(result.subtopics) && result.subtopics.length > 0 && result.subtopics.length <= 5;
+      - type: javascript
+        value: |
+          const result = JSON.parse(output);
+          return result.subtopics.every((topic) => !/compare|versus|vs\.?/i.test(`${topic.objective} ${topic.query_intent}`));
+      - type: javascript
+        value: |
+          const result = JSON.parse(output);
+          return Array.isArray(result.empty_or_deferred_lanes) && result.empty_or_deferred_lanes.some((lane) => /media|impact|external/i.test(lane));

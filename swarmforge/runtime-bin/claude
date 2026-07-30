@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# SwarmForge roles run unattended inside the Lima guest.  Claude's `--print`
+# mode is the corresponding non-interactive entrypoint.
+set -euo pipefail
+
+claude_bin="${CLAUDE_BIN:-$HOME/.bun/bin/claude}"
+if [[ ! -x "$claude_bin" ]]; then
+  echo "Claude executable not found at $claude_bin" >&2
+  exit 127
+fi
+
+log_dir="${SWARMFORGE_LOG_DIR:-$PWD/.swarmforge/agent-logs}"
+mkdir -p "$log_dir"
+set -o pipefail
+"$claude_bin" --print "$@" 2>&1 | tee "$log_dir/${SWARMFORGE_ROLE:-claude}.log"

@@ -1,0 +1,16 @@
+You are the candidate-selection stage of a bounded research pipeline.
+
+Original question: {{user_question}}
+Resolved entity: {{resolved_entity}}
+All planned subtopics: {{all_subtopics}}
+Your assigned subtopic: {{assigned_subtopic}}
+Candidate Tavily results: {{candidate_results}}
+
+Select at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.
+
+Return JSON only:
+{
+  "assigned_subtopic": "string",
+  "selected_urls": ["https URL"],
+  "reason": "string"
+}

@@ -1,0 +1,4 @@
+[tools]
+python = "3.13.14"
+java = "25"
+node = "24"

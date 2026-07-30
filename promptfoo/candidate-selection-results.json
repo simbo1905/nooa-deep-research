@@ -1,0 +1,521 @@
+{
+  "evalId": "eval-C9x-2026-07-30T21:53:41",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-07-30T21:53:41.386Z",
+    "prompts": [
+      {
+        "raw": "You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: {{user_question}}\nResolved entity: {{resolved_entity}}\nAll planned subtopics: {{all_subtopics}}\nYour assigned subtopic: {{assigned_subtopic}}\nCandidate Tavily results: {{candidate_results}}\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+        "label": "prompts/select-candidates-gated.txt: You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: {{user_question}}\nResolved entity: {{resolved_entity}}\nAll planned subtopics: {{all_subtopics}}\nYour assigned subtopic: {{assigned_subtopic}}\nCandidate Tavily results: {{candidate_results}}\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+        "id": "c628435a71a0e4ded3c2eeb811c84812db45c09537af8ee6a528f0bb1409e6f2",
+        "provider": "openai:chat:mistral-medium-3.5-128b",
+        "metrics": {
+          "score": 2,
+          "testPassCount": 2,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 4,
+          "assertFailCount": 0,
+          "totalLatencyMs": 3364,
+          "tokenUsage": {
+            "prompt": 683,
+            "completion": 192,
+            "cached": 0,
+            "total": 875,
+            "numRequests": 2,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn result.selected_urls.length > 0 && result.selected_urls.every((url) => url === 'https://github.com/unclebob/swarm-forge');\n"
+              }
+            }
+          ]
+        },
+        "id": "eb4e5294-4aa7-4540-85ad-412044c6974f",
+        "latencyMs": 1992,
+        "namedScores": {},
+        "prompt": {
+          "raw": "You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: tell me about the swarmforge project by uncle robert martin\nResolved entity: unclebob/swarm-forge at https://github.com/unclebob/swarm-forge\nAll planned subtopics: [\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]\nYour assigned subtopic: project-purpose-and-architecture\nCandidate Tavily results: [{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+          "label": "prompts/select-candidates-gated.txt: You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: {{user_question}}\nResolved entity: {{resolved_entity}}\nAll planned subtopics: {{all_subtopics}}\nYour assigned subtopic: {{assigned_subtopic}}\nCandidate Tavily results: {{candidate_results}}\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+          "config": {}
+        },
+        "promptId": "c628435a71a0e4ded3c2eeb811c84812db45c09537af8ee6a528f0bb1409e6f2",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openai:chat:mistral-medium-3.5-128b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"assigned_subtopic\": \"project-purpose-and-architecture\",\n  \"selected_urls\": [\"https://github.com/unclebob/swarm-forge\"],\n  \"reason\": \"The GitHub repository is the only result directly tied to the resolved entity (unclebob/swarm-forge) and explicitly describes its purpose (agent coordination in git worktrees with tmux, roles, and message passing), which aligns with the assigned subtopic. The other results are either unrelated or refer to a same-name entity in a different domain.\"\n}",
+          "tokenUsage": {
+            "total": 458,
+            "prompt": 341,
+            "completion": 117,
+            "numRequests": 1
+          },
+          "cached": false,
+          "latencyMs": 1992,
+          "finishReason": "stop",
+          "guardrails": {
+            "flagged": false
+          },
+          "metadata": {
+            "http": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+                "access-control-allow-methods": "GET, POST, OPTIONS",
+                "access-control-allow-origin": "*",
+                "content-type": "application/json",
+                "date": "Thu, 30 Jul 2026 21:53:40 GMT",
+                "server": "envoy",
+                "transfer-encoding": "chunked",
+                "x-envoy-upstream-service-time": "1810",
+                "x-ratelimit-limit-requests": "[REDACTED]",
+                "x-ratelimit-limit-tokens": "[REDACTED]",
+                "x-ratelimit-remaining-requests": "[REDACTED]",
+                "x-ratelimit-remaining-tokens": "[REDACTED]",
+                "x-ratelimit-reset-requests": "[REDACTED]",
+                "x-ratelimit-reset-tokens": "[REDACTED]",
+                "x-request-id": "[REDACTED]"
+              }
+            }
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Architecture lane selects the official repository",
+          "vars": {
+            "user_question": "tell me about the swarmforge project by uncle robert martin",
+            "resolved_entity": "unclebob/swarm-forge at https://github.com/unclebob/swarm-forge",
+            "all_subtopics": "[\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]",
+            "candidate_results": "[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]",
+            "assigned_subtopic": "project-purpose-and-architecture"
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn result.selected_urls.length > 0 && result.selected_urls.every((url) => url === 'https://github.com/unclebob/swarm-forge');\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 341,
+          "completion": 117,
+          "cached": 0,
+          "total": 458,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "user_question": "tell me about the swarmforge project by uncle robert martin",
+          "resolved_entity": "unclebob/swarm-forge at https://github.com/unclebob/swarm-forge",
+          "all_subtopics": "[\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]",
+          "candidate_results": "[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]",
+          "assigned_subtopic": "project-purpose-and-architecture"
+        },
+        "metadata": {
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "headers": {
+              "access-control-allow-credentials": "true",
+              "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+              "access-control-allow-methods": "GET, POST, OPTIONS",
+              "access-control-allow-origin": "*",
+              "content-type": "application/json",
+              "date": "Thu, 30 Jul 2026 21:53:40 GMT",
+              "server": "envoy",
+              "transfer-encoding": "chunked",
+              "x-envoy-upstream-service-time": "1810",
+              "x-ratelimit-limit-requests": "[REDACTED]",
+              "x-ratelimit-limit-tokens": "[REDACTED]",
+              "x-ratelimit-remaining-requests": "[REDACTED]",
+              "x-ratelimit-remaining-tokens": "[REDACTED]",
+              "x-ratelimit-reset-requests": "[REDACTED]",
+              "x-ratelimit-reset-tokens": "[REDACTED]",
+              "x-request-id": "[REDACTED]"
+            }
+          },
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "const result = JSON.parse(output);\nreturn Array.isArray(result.selected_urls) && result.selected_urls.length === 0;\n"
+              }
+            }
+          ]
+        },
+        "id": "a914b02d-4006-4413-91ed-198142a2b29d",
+        "latencyMs": 1372,
+        "namedScores": {},
+        "prompt": {
+          "raw": "You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: tell me about the swarmforge project by uncle robert martin\nResolved entity: unclebob/swarm-forge at https://github.com/unclebob/swarm-forge\nAll planned subtopics: [\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]\nYour assigned subtopic: independent-media-or-impact\nCandidate Tavily results: [{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+          "label": "prompts/select-candidates-gated.txt: You are the candidate-selection stage of a bounded research pipeline.\n\nOriginal question: {{user_question}}\nResolved entity: {{resolved_entity}}\nAll planned subtopics: {{all_subtopics}}\nYour assigned subtopic: {{assigned_subtopic}}\nCandidate Tavily results: {{candidate_results}}\n\nSelect at most 10 URLs that are both about the resolved entity and directly useful for your assigned subtopic. You may return no URLs. Never select a same-name entity from another domain merely to fill the lane.\n\nReturn JSON only:\n{\n  \"assigned_subtopic\": \"string\",\n  \"selected_urls\": [\"https URL\"],\n  \"reason\": \"string\"\n}",
+          "config": {}
+        },
+        "promptId": "c628435a71a0e4ded3c2eeb811c84812db45c09537af8ee6a528f0bb1409e6f2",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openai:chat:mistral-medium-3.5-128b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"assigned_subtopic\": \"independent-media-or-impact\",\n  \"selected_urls\": [],\n  \"reason\": \"None of the candidate URLs provide independent media coverage or discuss the impact of the unclebob/swarm-forge project. The GitHub repository is the only relevant result, but it does not address the assigned subtopic.\"\n}",
+          "tokenUsage": {
+            "total": 417,
+            "prompt": 342,
+            "completion": 75,
+            "numRequests": 1
+          },
+          "cached": false,
+          "latencyMs": 1372,
+          "finishReason": "stop",
+          "guardrails": {
+            "flagged": false
+          },
+          "metadata": {
+            "http": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "access-control-allow-credentials": "true",
+                "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+                "access-control-allow-methods": "GET, POST, OPTIONS",
+                "access-control-allow-origin": "*",
+                "content-type": "application/json",
+                "date": "Thu, 30 Jul 2026 21:53:40 GMT",
+                "server": "envoy",
+                "transfer-encoding": "chunked",
+                "x-envoy-upstream-service-time": "1213",
+                "x-ratelimit-limit-requests": "[REDACTED]",
+                "x-ratelimit-limit-tokens": "[REDACTED]",
+                "x-ratelimit-remaining-requests": "[REDACTED]",
+                "x-ratelimit-remaining-tokens": "[REDACTED]",
+                "x-ratelimit-reset-requests": "[REDACTED]",
+                "x-ratelimit-reset-tokens": "[REDACTED]",
+                "x-request-id": "[REDACTED]"
+              }
+            }
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Empty media lane does not borrow same-name military coverage",
+          "vars": {
+            "user_question": "tell me about the swarmforge project by uncle robert martin",
+            "resolved_entity": "unclebob/swarm-forge at https://github.com/unclebob/swarm-forge",
+            "all_subtopics": "[\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]",
+            "candidate_results": "[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]",
+            "assigned_subtopic": "independent-media-or-impact"
+          },
+          "assert": [
+            {
+              "type": "is-json"
+            },
+            {
+              "type": "javascript",
+              "value": "const result = JSON.parse(output);\nreturn Array.isArray(result.selected_urls) && result.selected_urls.length === 0;\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "tokenUsage": {
+          "prompt": 342,
+          "completion": 75,
+          "cached": 0,
+          "total": 417,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "user_question": "tell me about the swarmforge project by uncle robert martin",
+          "resolved_entity": "unclebob/swarm-forge at https://github.com/unclebob/swarm-forge",
+          "all_subtopics": "[\"project-purpose-and-architecture\",\"repository-and-runnable-workflows\",\"independent-media-or-impact\"]",
+          "candidate_results": "[{\"url\":\"https://github.com/unclebob/swarm-forge\",\"title\":\"unclebob/swarm-forge\",\"content\":\"Agent coordination in git worktrees with tmux, roles, and message passing.\"},{\"url\":\"https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment\",\"title\":\"Pentagon Swarm Forge drone program\",\"content\":\"A military drone initiative with the same name.\"},{\"url\":\"https://swarmforge.ai/\",\"title\":\"SwarmForge AI coworkers\",\"content\":\"An unrelated commercial product.\"}]",
+          "assigned_subtopic": "independent-media-or-impact"
+        },
+        "metadata": {
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "headers": {
+              "access-control-allow-credentials": "true",
+              "access-control-allow-headers": "User-Agent,X-Requested-With,X-Forwarded-For,If-Modified-Since,Cache-Control,Content-Type, Range,Authorization,Access-Control-Allow-Origin,Referer,X-Stainless-Os,X-Stainless-Runtime, X-Stainless-Runtime-Version,X-Stainless-Arch,X-Stainless-Lang,X-Stainless-Package-Version, X-Stainless-Retry-Count,X-Stainless-Timeout",
+              "access-control-allow-methods": "GET, POST, OPTIONS",
+              "access-control-allow-origin": "*",
+              "content-type": "application/json",
+              "date": "Thu, 30 Jul 2026 21:53:40 GMT",
+              "server": "envoy",
+              "transfer-encoding": "chunked",
+              "x-envoy-upstream-service-time": "1213",
+              "x-ratelimit-limit-requests": "[REDACTED]",
+              "x-ratelimit-limit-tokens": "[REDACTED]",
+              "x-ratelimit-remaining-requests": "[REDACTED]",
+              "x-ratelimit-remaining-tokens": "[REDACTED]",
+              "x-ratelimit-reset-requests": "[REDACTED]",
+              "x-ratelimit-reset-tokens": "[REDACTED]",
+              "x-request-id": "[REDACTED]"
+            }
+          },
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 2,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 683,
+        "completion": 192,
+        "cached": 0,
+        "total": 875,
+        "numRequests": 2,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 2115,
+      "evaluationDurationMs": 2115
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SwarmForge per-subtopic candidate-selection digital twin",
+    "prompts": [
+      "file:///Users/Shared/swarm-forge/projects/nooa-deep-research/promptfoo/prompts/select-candidates-gated.txt"
+    ],
+    "providers": [
+      {
+        "id": "openai:chat:mistral-medium-3.5-128b",
+        "config": {
+          "apiBaseUrl": "https://api.scaleway.ai/5647c6fe-ecc5-4277-9e5e-9ec56b1ac2c8/v1",
+          "temperature": 0.2,
+          "max_tokens": 800,
+          "response_format": {
+            "type": "json_object"
+          }
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "Architecture lane selects the official repository",
+        "vars": {
+          "assigned_subtopic": "project-purpose-and-architecture"
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "javascript",
+            "value": "const result = JSON.parse(output);\nreturn result.selected_urls.length > 0 && result.selected_urls.every((url) => url === 'https://github.com/unclebob/swarm-forge');\n"
+          }
+        ]
+      },
+      {
+        "description": "Empty media lane does not borrow same-name military coverage",
+        "vars": {
+          "assigned_subtopic": "independent-media-or-impact"
+        },
+        "assert": [
+          {
+            "type": "is-json"
+          },
+          {
+            "type": "javascript",
+            "value": "const result = JSON.parse(output);\nreturn Array.isArray(result.selected_urls) && result.selected_urls.length === 0;\n"
+          }
+        ]
+      }
+    ],
+    "env": {},
+    "outputPath": [
+      "candidate-selection-results.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.19",
+    "nodeVersion": "v26.5.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-07-30T21:53:43.578Z",
+    "evaluationCreatedAt": "2026-07-30T21:53:41.386Z"
+  },
+  "vars": [
+    "user_question",
+    "resolved_entity",
+    "all_subtopics",
+    "candidate_results",
+    "assigned_subtopic"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "showProgressBar": false,
+    "repeat": 1,
+    "maxConcurrency": 4,
+    "cache": true
+  }
+}

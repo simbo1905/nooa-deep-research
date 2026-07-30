@@ -1,0 +1,30 @@
+description: SwarmForge per-subtopic candidate-selection digital twin
+providers:
+  - id: openai:chat:mistral-medium-3.5-128b
+    config:
+      apiBaseUrl: https://api.scaleway.ai/5647c6fe-ecc5-4277-9e5e-9ec56b1ac2c8/v1
+      temperature: 0.2
+      max_tokens: 800
+      response_format:
+        type: json_object
+prompts:
+  - file://prompts/select-candidates-gated.txt
+tests:
+  - description: Architecture lane selects the official repository
+    vars:
+      assigned_subtopic: project-purpose-and-architecture
+    assert:
+      - type: is-json
+      - type: javascript
+        value: |
+          const result = JSON.parse(output);
+          return result.selected_urls.length > 0 && result.selected_urls.every((url) => url === 'https://github.com/unclebob/swarm-forge');
+  - description: Empty media lane does not borrow same-name military coverage
+    vars:
+      assigned_subtopic: independent-media-or-impact
+    assert:
+      - type: is-json
+      - type: javascript
+        value: |
+          const result = JSON.parse(output);
+          return Array.isArray(result.selected_urls) && result.selected_urls.length === 0;

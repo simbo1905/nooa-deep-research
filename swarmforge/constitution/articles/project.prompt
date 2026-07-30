@@ -1,0 +1,49 @@
+# Project Rules
+
+## Project Shape
+- This project is configured for SwarmForge with Claude as specifier and Codex as coder, cleaner, architect, hardender, and QA.
+- Project language: Python 3.13.14. NOOA v0.0.8 declares `>=3.12,<3.14`; use uv and the project `mise.toml` and do not introduce another environment manager.
+- The final deliverable is a minimal executable NOOA v0.0.8 deep-research agent. The pinned reference checkout is `.tmp/labs-OO-Agents-v0.0.8`; do not modify it.
+
+## Approved Feature
+- Implement one ordinary-text CLI agent that accepts questions such as `tell me about the swarmforge project by uncle robert martin`. `/deep-research` is illustrative user pseudocode, not a command-routing requirement.
+- Load `SCW_SECRET_KEY` and `TAVILY_API_KEY` from the environment. Never commit, print, or copy secrets.
+- Use Scaleway's OpenAI-compatible endpoint with `mistral-medium-3.5-128b` for planning and report writing, `gemma-4-26b-a4b-it` for page summaries, and Tavily for discovery/extraction. Do not use Ollama in this project.
+- The NOOA `Agent` must contain LLM-driven `...` methods for query expansion, target disambiguation, research planning, candidate ranking, and final report writing. Its deterministic Python capabilities must retain prior results on the live object.
+- Set and enforce `MAX_INITIAL_TERM_SEARCHES=3`, `MAX_SUBTOPIC_QUERIES=1`, `MAX_CANDIDATES_PER_SUBTOPIC=10`, `MAX_SUBTOPICS=5`, and `MAX_TOTAL_FULL_PAGE_READS=50`.
+- Run initial and subtopic Tavily searches concurrently. Give the candidate-ranking model the original question, every subtopic, and its assigned subtopic so it returns an empty list rather than borrowing irrelevant links from another lane.
+- Deduplicate canonical URLs globally while retaining each selected page's subtopic associations. Extract full pages sequentially, using a read-through disk cache; summarize each fetched page once with Gemma in relation to its relevant subtopics.
+- Persist the raw Tavily responses, extracted pages, summaries, research plan, and cited Markdown report in a timestamped run directory.
+- The SwarmForge development VM is `nooa-swarm`. Synchronize by rsync/SSH; do not rely on Lima mounts, Docker, BuildKit, or Docker volumes.
+
+## Staged Delivery Gates
+- Do not one-shot the final agent. Each stage must produce durable artifacts, run its listed validation, and be handed off as a narrowly scoped git change before the next stage starts.
+- Meta-design time: define the interface contracts, the recorded or synthetic tool fixtures, the pass/fail assertions, and the model/provider choice. No live agent implementation belongs here.
+- Design time: implement only the smallest agent or adapter needed for one contract. Preserve the boundary between deterministic adapters and NOOA `...` methods.
+- Design validation time: replay captured tool responses in Promptfoo and run deterministic tests. A failing replay contract blocks prompt tuning and deployment.
+- Prompt-optimization time: compare prompt variants over the same frozen captures; retain the scored evaluation output and promote a variant only if its assertions pass. Golden/happy-path fixtures may scaffold behavior but must be labelled as such and never replace ambiguous or negative captures.
+- Deployment time: rsync approved source to `nooa-swarm`, validate the pinned mise/uv/NOOA environment, and verify only the component being deployed. No live end-user research run belongs here.
+- Instantiation time: construct the approved NOOA objects with explicit model and tool adapters, then run the component's smoke input. Do not broaden its responsibility.
+- Runtime: use live Tavily only after the corresponding replay gate is green. Persist each live request and response as a new candidate fixture; do not overwrite existing captures.
+
+## Initial Gate Sequence
+- Gate D1, disambiguation digital twin: Promptfoo runs Mistral Medium against a captured ambiguous Tavily result set. It must select `https://github.com/unclebob/swarm-forge` and reject same-name military and unrelated commercial entities.
+- Gate D2, NOOA summarizer seed: `seed_scaleway_gemma.py` runs one NOOA `...` summary method through Scaleway Gemma. It must produce grounded bullets and preserve the supplied source URL.
+- Gate D3, planning digital twin: only after D1 and D2 pass, add a frozen fixture and Promptfoo contract for subtopic planning. The planner may return an empty lane; it must not steal results from another lane.
+- Gate D4, candidate selection and page-cache adapters: use captured Tavily results to test per-lane ranking, canonical-URL deduplication, cache reuse, and the configured caps before any live multi-step run.
+- Gate D5, integration: connect the approved components in NOOA, run one bounded live research task, then capture and review its artifacts before expanding scope.
+
+## Acceptance Example
+- A live run for `tell me about the swarmforge project by uncle robert martin` must identify `unclebob/swarm-forge`, cite its official repository, and explicitly distinguish unrelated military/drone Swarm Forge results.
+
+## Local Configuration
+- Preserve project-local SwarmForge configuration under `swarmforge/`.
+- Keep swarm state local under `.swarmforge/`, worktrees under `.worktrees/`, and shared scripts under `swarmforge/scripts/`.
+- Relevant reusable VM tooling is only mise Python 3.13.14, uv, Bun/Promptfoo, Babashka for SwarmForge itself, Codex, and Claude. Use their normal VM caches; never clone analysis-tool repositories into a role worktree.
+- Run only the verification relevant to the assigned delivery gate. Promptfoo gates use their frozen fixtures; Python gates use the smallest relevant `uv run` command.
+
+## Handoffs
+- Prefer terse, explicit handoffs that report state and request role-appropriate review. Do not include verifications or sender process narrative.
+
+## Ownership
+- Do not change another role's prompt or workflow ownership without explicit user direction.

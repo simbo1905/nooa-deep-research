@@ -1,0 +1,8 @@
+Given the user question and Tavily search capture below, select the entity the user most likely means.
+
+User question: {{user_question}}
+
+Search capture:
+{{tavily_capture}}
+
+Return JSON only with `canonical_name`, `canonical_url`, and `reason`.

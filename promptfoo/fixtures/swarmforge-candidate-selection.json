@@ -1,0 +1,26 @@
+{
+  "user_question": "tell me about the swarmforge project by uncle robert martin",
+  "resolved_entity": "unclebob/swarm-forge at https://github.com/unclebob/swarm-forge",
+  "all_subtopics": [
+    "project-purpose-and-architecture",
+    "repository-and-runnable-workflows",
+    "independent-media-or-impact"
+  ],
+  "candidate_results": [
+    {
+      "url": "https://github.com/unclebob/swarm-forge",
+      "title": "unclebob/swarm-forge",
+      "content": "Agent coordination in git worktrees with tmux, roles, and message passing."
+    },
+    {
+      "url": "https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment",
+      "title": "Pentagon Swarm Forge drone program",
+      "content": "A military drone initiative with the same name."
+    },
+    {
+      "url": "https://swarmforge.ai",
+      "title": "SwarmForge AI coworkers",
+      "content": "An unrelated commercial product."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "captured_at": "2026-07-30",
+  "request": {
+    "query": "what is swarmforge?",
+    "search_depth": "basic",
+    "max_results": 5
+  },
+  "results": [
+    {
+      "url": "https://github.com/unclebob/swarm-forge",
+      "title": "GitHub - unclebob/swarm-forge: A simple tool for coordinating several AI agents.",
+      "score": 0.918663,
+      "content": "SwarmForge is an agent coordination system that facilitates communication between agents working in different git worktrees. It provides role-specific prompts, worktree assignment, tmux sessions, and message passing. The main branch is documentary and runnable workflows live on pack branches."
+    },
+    {
+      "url": "https://www.forbes.com/sites/davidhambling/2026/01/28/swarm-forge-pentagons-mass-drone-test-signals-near-term-deployment",
+      "title": "Swarm Forge: Pentagon’s Mass-Drone Test Signals Near-Term Deployment",
+      "score": 0.88564163,
+      "content": "A military drone demonstration and Pentagon AI initiative named Swarm Forge."
+    },
+    {
+      "url": "https://www.tradewindai.com/swarm-forge",
+      "title": "Swarm Forge Prototype Project | Tradewinds",
+      "score": 0.8430832,
+      "content": "A defense solicitation concerning autonomous UAS swarming capabilities."
+    },
+    {
+      "url": "https://defensescoop.com/2026/03/31/pentagon-preparing-drone-swarm-crucible",
+      "title": "Pentagon preparing for drone swarm ‘crucible’",
+      "score": 0.83093774,
+      "content": "Reporting on the Pentagon's autonomous drone swarm initiative called Swarm Forge."
+    },
+    {
+      "url": "https://swarmforge.ai",
+      "title": "AI coworkers built for real jobs",
+      "score": 0.78393924,
+      "content": "A separate commercial AI coworker product named SwarmForge AI."
+    }
+  ]
+}

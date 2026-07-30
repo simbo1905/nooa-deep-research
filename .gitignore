@@ -1,0 +1,10 @@
+.DS_Store
+.env
+.claude/
+.swarmforge/
+.worktrees/
+swarmforge/scripts/
+.tmp/
+artifacts/
+reports/
+.promptfoo/

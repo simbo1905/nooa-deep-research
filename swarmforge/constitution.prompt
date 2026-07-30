@@ -1,0 +1,13 @@
+# SwarmForge Constitution
+
+This file takes precedence over article files.
+Read and obey every file in `swarmforge/constitution/articles/`.
+
+# NOOA Project Override
+
+This is a Python/uv/NOOA project, not a Clojure project. Do not clone, install,
+or run Clojure analysis tools, the Acceptance Pipeline Specification, Gherkin
+tools, mutation tools, CRAP, DRY, property-testing frameworks, or any other
+tool unless the assigned task explicitly requires it. Do not perform startup
+tool bootstrap. The project article is the authoritative tool and verification
+policy for this project.

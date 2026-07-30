@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# SwarmForge roles run unattended inside the Lima guest.  Codex's interactive
+# entrypoint rejects that environment; `codex exec` is the non-interactive CLI.
+set -euo pipefail
+
+codex_bin="${CODEX_BIN:-$HOME/.bun/bin/codex}"
+if [[ ! -x "$codex_bin" ]]; then
+  echo "Codex executable not found at $codex_bin" >&2
+  exit 127
+fi
+
+exec "$codex_bin" exec "$@"
