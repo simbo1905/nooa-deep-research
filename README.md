@@ -2,6 +2,9 @@
 
 This is an independent project repository that uses SwarmForge as an upstream
 launcher/template. It does not modify or need a fork of `unclebob/swarm-forge`.
+By default its launcher downloads shared scripts from
+`simbo1905/swarm-forge:simbo1905`; set `SWARMFORGE_SCRIPTS_URL` or
+`SWARMFORGE_SCRIPTS_BRANCH` to test another revision.
 
 ## Map
 
