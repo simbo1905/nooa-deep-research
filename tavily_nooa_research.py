@@ -45,6 +45,16 @@ def planner_client():
     )
 
 
+def gemma_client():
+    api_key = os.environ.get("SCW_SECRET_KEY")
+    if not api_key:
+        raise RuntimeError("SCW_SECRET_KEY is required")
+    return get_llm_client(
+        "openai/gemma-4-26b-a4b-it", api_base=SCW_BASE_URL, api_key=api_key,
+        temperature=0.2, max_tokens=2048,
+    )
+
+
 class TavilyClient:
     """Ordinary deterministic Python. This is the future NOOA tool boundary."""
 
@@ -82,6 +92,20 @@ class TavilyClient:
         self.search_log.append({"query": query, "results": results})
         return results
 
+    def extract(self, url: str) -> str:
+        """Fetch one selected page through Tavily's extraction endpoint."""
+        api_key = os.environ.get("TAVILY_API_KEY")
+        if not api_key:
+            raise RuntimeError("TAVILY_API_KEY is required")
+        request = urllib.request.Request(
+            "https://api.tavily.com/extract",
+            data=json.dumps({"api_key": api_key, "urls": [url]}).encode(),
+            headers={"Content-Type": "application/json"}, method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=30) as response:  # nosec B310: fixed HTTPS endpoint
+            payload = json.load(response)
+        return str((payload.get("results") or [{}])[0].get("raw_content", ""))
+
 
 class ResearchWriter(Agent, llm=planner_client()):
     """Write grounded research answers from deterministic Tavily results."""
@@ -101,6 +125,18 @@ class ResearchWriter(Agent, llm=planner_client()):
         ...
 
 
+class PageSummarizer(Agent, llm=gemma_client()):
+    """Make grounded notes from one fetched page."""
+
+    @strategy(PredictStrategy())
+    async def summarize(self, url: str, page_text: str) -> str:
+        """Give three factual bullets from this page only: {page_text}
+
+        Include {url}. Do not add claims absent from the page.
+        """
+        ...
+
+
 async def main() -> None:
     question = " ".join(sys.argv[1:]).strip()
     if not question:
@@ -113,9 +149,15 @@ async def main() -> None:
             if result["url"] not in seen_urls:
                 seen_urls.add(result["url"])
                 search_results.append(result)
+    official_url = next((item["url"] for item in search_results if item["url"] == "https://github.com/unclebob/swarm-forge"), "")
+    page_note = ""
+    if official_url:
+        page_note = await PageSummarizer().summarize(official_url, tavily.extract(official_url)[:12000])
     agent = ResearchWriter()
     answer = await agent.write_answer(question, search_results)
     print(json.dumps(answer.model_dump(), indent=2))
+    if page_note:
+        print("\nOfficial-page Gemma notes:\n" + page_note)
     print("\nTavily calls made:")
     print(json.dumps(tavily.search_log, indent=2))
 
