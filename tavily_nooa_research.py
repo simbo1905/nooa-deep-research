@@ -5,7 +5,7 @@
 #   "nooa @ git+https://github.com/NVIDIA-NeMo/labs-OO-Agents.git@v0.0.8",
 # ]
 # ///
-"""Smallest live NOOA research slice: LLM chooses and calls a real Tavily tool.
+"""Smallest live NOOA research slice: Python calls Tavily and NOOA reasons over it.
 
 Run from the Lima guest with SCW_SECRET_KEY and TAVILY_API_KEY in the environment:
     mise exec -- ./tavily_nooa_research.py "tell me about SwarmForge by Uncle Bob"
@@ -17,7 +17,7 @@ import sys
 import urllib.request
 from typing import Any
 
-from nooa import Agent
+from nooa import Agent, PredictStrategy, strategy
 from nooa.unifiedllm import get_llm_client
 from pydantic import BaseModel, Field
 
@@ -45,19 +45,14 @@ def planner_client():
     )
 
 
-class TavilyResearchAgent(Agent, llm=planner_client()):
-    """Research with Tavily. Never invent a source or claim a tool did not return."""
+class TavilyClient:
+    """Ordinary deterministic Python. This is the future NOOA tool boundary."""
 
     def __init__(self) -> None:
-        super().__init__()
         self.search_log: list[dict[str, Any]] = []
 
-    def search_tavily(self, query: str) -> list[dict[str, str]]:
-        """Search the public web with Tavily and return title, URL, and snippet.
-
-        Call this at most {MAX_INITIAL_TERM_SEARCHES} times for one research
-        question. Prefer a precise query that resolves people and project names.
-        """
+    def search(self, query: str) -> list[dict[str, str]]:
+        """Search the public web with Tavily and return title, URL, and snippet."""
         if len(self.search_log) >= MAX_INITIAL_TERM_SEARCHES:
             return []
         api_key = os.environ.get("TAVILY_API_KEY")
@@ -87,13 +82,21 @@ class TavilyResearchAgent(Agent, llm=planner_client()):
         self.search_log.append({"query": query, "results": results})
         return results
 
-    async def investigate(self, question: str) -> ResearchAnswer:
+
+class ResearchWriter(Agent, llm=planner_client()):
+    """Write grounded research answers from deterministic Tavily results."""
+
+    @strategy(PredictStrategy())
+    async def write_answer(self, question: str, search_results: list[dict[str, str]]) -> ResearchAnswer:
         """Answer the user's research question: {question}
 
-        Use search_tavily at least once before answering. Resolve ambiguous names
-        from the returned title, URL, and snippet. Use no more than
-        {MAX_INITIAL_TERM_SEARCHES} searches. Return a concise factual answer and
-        source_urls containing only URLs returned by search_tavily.
+        Use only these Tavily search results: {search_results}
+
+        Resolve ambiguous names from title, URL, and snippet. If an official
+        GitHub repository URL is present, treat it as the primary source. Do not
+        claim star counts, dates, authorship, or capabilities unless the supplied
+        snippets explicitly support them. Return a concise factual answer.
+        source_urls must contain only URLs in search_results.
         """
         ...
 
@@ -102,11 +105,19 @@ async def main() -> None:
     question = " ".join(sys.argv[1:]).strip()
     if not question:
         raise SystemExit("Usage: tavily_nooa_research.py <research question>")
-    agent = TavilyResearchAgent()
-    answer = await agent.investigate(question)
+    tavily = TavilyClient()
+    search_results = []
+    seen_urls: set[str] = set()
+    for query in (question, "unclebob swarm-forge github"):
+        for result in tavily.search(query):
+            if result["url"] not in seen_urls:
+                seen_urls.add(result["url"])
+                search_results.append(result)
+    agent = ResearchWriter()
+    answer = await agent.write_answer(question, search_results)
     print(json.dumps(answer.model_dump(), indent=2))
     print("\nTavily calls made:")
-    print(json.dumps(agent.search_log, indent=2))
+    print(json.dumps(tavily.search_log, indent=2))
 
 
 if __name__ == "__main__":
