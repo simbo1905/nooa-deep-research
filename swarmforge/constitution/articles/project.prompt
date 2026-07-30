@@ -36,6 +36,12 @@
 ## Acceptance Example
 - A live run for `tell me about the swarmforge project by uncle robert martin` must identify `unclebob/swarm-forge`, cite its official repository, and explicitly distinguish unrelated military/drone Swarm Forge results.
 
+## Stretch Goal: Resumable Runs
+- Keep the reusable agent definition separate from a per-request `ResearchRunState`.
+- Persist a versioned JSON state file and page cache after each phase so a stopped process can be rehydrated without repeating completed calls.
+- Do not use pickle as the durable interchange format. It may be used only for a same-version local development experiment; JSON state is the restart contract.
+- An optional Jupyter/server process may retain a live agent object for interactive work, but it must expose stop/start through the same persisted state contract.
+
 ## Local Configuration
 - Preserve project-local SwarmForge configuration under `swarmforge/`.
 - Keep swarm state local under `.swarmforge/`, worktrees under `.worktrees/`, and shared scripts under `swarmforge/scripts/`.

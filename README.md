@@ -3,6 +3,22 @@
 This is an independent project repository that uses SwarmForge as an upstream
 launcher/template. It does not modify or need a fork of `unclebob/swarm-forge`.
 
+## Map
+
+```
+your fork of unclebob/swarm-forge (branch: simbo1905)
+  └─ shared SwarmForge launcher and generic scripts
+       └─ this repository: NOOA deep-research project configuration
+            ├─ design/validation: Promptfoo frozen fixtures and gates D1, D3, D4
+            ├─ implementation: NOOA Python agent and deterministic adapters
+            ├─ deployment: rsync → Lima VM `nooa-swarm`
+            ├─ instantiation: a new ResearchRun with explicit provider adapters
+            └─ runtime: persisted run state, Tavily captures, page cache, report
+```
+
+The SwarmForge fork is infrastructure. This repository is the product. Keep
+their histories and remotes separate.
+
 ## Configuration boundaries
 
 - Commit this repository: roles, constitution, Promptfoo fixtures, the NOOA
@@ -24,3 +40,11 @@ Codex and Claude shims; they use `codex exec` and `claude --print` respectively.
 Run the frozen Promptfoo gates first, then the seed NOOA smoke, before any
 bounded live Tavily run. The authoritative gate definitions are in
 `swarmforge/constitution/articles/project.prompt`.
+
+## Resumability stretch goal
+
+The first runnable agent will persist a versioned JSON `ResearchRunState` after
+each phase and can rehydrate it in a new process. That is safer and more stable
+than persisting a Python/LLM object with pickle. A later optional Jupyter or
+service process may keep a live agent object in memory, but restart/resume must
+always work from the persisted state and cache.
