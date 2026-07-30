@@ -1,10 +1,13 @@
 # Local Engineering Rules
 
 ## Verification
-- Every agent except the specifier must run unit tests and acceptance tests before handoff and fix any failures.
-- The architect, hardender, and QA must run property tests before handoff when the project has them and fix any failures.
+- Run only the narrow validation named by the assigned delivery gate. Do not run
+  acceptance, Gherkin, property, mutation, CRAP, or DRY tooling unless the user
+  explicitly asks for that exact verification.
 
 ## Python Runtime Rules
 - Final user-facing executable scripts must use `#!/usr/bin/env -S uv run --script`, an inline dependency declaration, and `requires-python = ">=3.12,<3.14"`.
-- Unit tests must mock Mistral, Tavily, and Ollama. Add a separately marked live preflight that calls each configured provider only when the required environment variables and local Ollama service are present.
+- Unit tests must mock Scaleway's OpenAI-compatible Mistral and Gemma models and
+  Tavily. Add a separately marked live preflight only when `SCW_SECRET_KEY` and
+  `TAVILY_API_KEY` are present.
 - Keep network IO in adapters that can be replaced in tests. Do not write generated research data into the source tree except beneath an ignored runtime-output directory.
