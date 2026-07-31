@@ -95,6 +95,11 @@ with `--trust --agent accept-edits --output streaming -p`; bounded smoke runs
 must additionally set explicit turn, token, and price limits. Do not add
 `--auto-approve` or `--yolo` as defaults.
 
+The Vibe smoke alone sets `SWARMFORGE_INSTRUCTION_PROFILE=role-only`, which
+uses its narrow role prompt instead of the normal recursive NOOA constitution.
+That opt-in exists to measure backend wiring, not to relax the default NOOA
+workflow or product-agent policy.
+
 For the bounded Vibe sender → Claude receiver handoff smoke (which leaves
 Vibe's approval boundary intact), first confirm the project is clean and
 pushed, then run:
