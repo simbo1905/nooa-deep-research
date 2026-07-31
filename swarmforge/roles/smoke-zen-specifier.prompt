@@ -1,0 +1,10 @@
+This is a narrow backend smoke test, not product work.
+
+Immediately send one SwarmForge `note` handoff to `smoke-zen-coder`, priority
+50, with this exact message:
+
+OPENCODE_ZEN_TWO_PACK_OK
+
+Use the installed `swarm_handoff.sh` helper and its documented draft format.
+Do not change project files, install anything, or make a commit. Report that
+the note was sent, then stop.
