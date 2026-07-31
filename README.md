@@ -51,3 +51,26 @@ each phase and can rehydrate it in a new process. That is safer and more stable
 than persisting a Python/LLM object with pickle. A later optional Jupyter or
 service process may keep a live agent object in memory, but restart/resume must
 always work from the persisted state and cache.
+
+## OpenCode backend provisioning
+
+The OpenCode backend is intentionally provisioned in the Lima guest instead
+of inheriting an ambient Mac login. From the Mac host run:
+
+```bash
+./scripts/provision-opencode-in-lima.sh
+```
+
+It installs OpenCode 1.18.9 into the project-pinned mise Node runtime and
+creates `~/.local/share/opencode/auth.json` in Lima with two entries from the
+single uncommitted root `OPENCODE_API_KEY`: `opencode-go` for Go and `opencode`
+for Zen. A role chooses a provider/model in `swarmforge.conf`, for example:
+
+```text
+window coder opencode coder task --model opencode-go/qwen3.7-plus --auto
+window refactorer opencode refactorer task --model opencode/kimi-k3 --auto
+```
+
+Run `mise exec -- opencode models opencode-go --refresh` and
+`mise exec -- opencode models opencode --refresh` in Lima before selecting a
+model, because the provider catalogues change over time.

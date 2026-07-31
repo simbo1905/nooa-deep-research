@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# OpenCode is installed into the project-pinned mise Node runtime.  Keeping the
+# wrapper on the SwarmForge role PATH makes the backend independent of the
+# guest's ambient shell configuration.
+set -euo pipefail
+
+exec mise exec -- opencode "$@"
