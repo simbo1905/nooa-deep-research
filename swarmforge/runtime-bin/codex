@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# SwarmForge roles run unattended inside the Lima guest.  Codex's interactive
-# entrypoint rejects that environment; `codex exec` is the non-interactive CLI.
+# SwarmForge roles run unattended in a mountless Lima guest. Codex's bundled
+# Bubblewrap sandbox cannot configure guest loopback there, so use Codex's
+# direct sandbox mode *inside the isolated VM*; this is not a host yolo mode.
+# `codex exec` remains the non-interactive entrypoint.
 set -euo pipefail
 
 codex_bin="${CODEX_BIN:-$HOME/.bun/bin/codex}"
@@ -9,4 +11,4 @@ if [[ ! -x "$codex_bin" ]]; then
   exit 127
 fi
 
-exec "$codex_bin" exec "$@"
+exec "$codex_bin" exec --sandbox danger-full-access "$@"
