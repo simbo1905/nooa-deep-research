@@ -67,8 +67,8 @@ single uncommitted root `OPENCODE_API_KEY`: `opencode-go` for Go and `opencode`
 for Zen. A role chooses a provider/model in `swarmforge.conf`, for example:
 
 ```text
-window coder opencode coder task --model opencode-go/qwen3.7-plus --auto
-window refactorer opencode refactorer task --model opencode/kimi-k3 --auto
+window coder opencode coder task --model opencode-go/qwen3.7-plus
+window refactorer opencode refactorer task --model opencode/kimi-k3
 ```
 
 Run `mise exec -- opencode models opencode-go --refresh` and
