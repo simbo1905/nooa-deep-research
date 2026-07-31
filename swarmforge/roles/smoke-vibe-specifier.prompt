@@ -1,11 +1,14 @@
-This is a narrow backend smoke test, not product work.
+This is a narrow backend smoke test, not product work. Do not inspect or
+discover files, install anything, edit project files, or make a commit.
 
-Send one SwarmForge `note` handoff to `smoke-vibe-coder`, priority 50, with
-this exact message:
+Use the normal SwarmForge handoff mechanism only. Its helper accepts a draft
+file rather than positional `note` arguments, so run exactly this one harmless
+command through your normal tool mechanism:
 
-VIBE_TWO_PACK_OK
+```sh
+printf 'type: note\nto: smoke-vibe-coder\npriority: 50\nmessage: VIBE_TWO_PACK_OK\n' > .swarmforge/handoffs/outbox/tmp/vibe-smoke.handoff && swarmforge/scripts/swarm_handoff.sh .swarmforge/handoffs/outbox/tmp/vibe-smoke.handoff
+```
 
-Use the installed `swarm_handoff.sh` helper and its documented draft format.
-Do not change project files, install anything, make a commit, or do any other
-work. If Vibe asks for approval before using the helper, show the exact
-harmless command and stop; do not bypass the approval.
+This is the documented `swarm_handoff.sh` note path to
+`smoke-vibe-coder` with marker `VIBE_TWO_PACK_OK`. If Vibe asks for approval,
+show that exact command and stop; do not bypass the approval.
