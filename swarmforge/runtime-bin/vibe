@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Mistral Vibe runs programmatically in the Lima guest.  It is deliberately a
+# single-provider wrapper: credentials and model configuration remain owned by
+# Vibe under the guest's ~/.vibe directory.
+set -euo pipefail
+
+vibe_bin="${VIBE_BIN:-$HOME/.local/bin/vibe}"
+if [[ ! -x "$vibe_bin" ]]; then
+  echo "Vibe executable not found at $vibe_bin" >&2
+  exit 127
+fi
+
+# Role output is useful SwarmForge evidence, but it must not become a shared
+# credential store.  Vibe itself is never invoked with configuration-printing
+# options, and restrictive permissions limit access to any accidental output.
+log_dir="${SWARMFORGE_LOG_DIR:-$PWD/.swarmforge/agent-logs}"
+umask 077
+mkdir -p "$log_dir"
+
+set -o pipefail
+"$vibe_bin" "$@" 2>&1 | tee "$log_dir/${SWARMFORGE_ROLE:-vibe}.log"

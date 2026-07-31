@@ -74,3 +74,23 @@ window refactorer opencode refactorer task --model opencode/kimi-k3
 Run `mise exec -- opencode models opencode-go --refresh` and
 `mise exec -- opencode models opencode --refresh` in Lima before selecting a
 model, because the provider catalogues change over time.
+
+## Mistral Vibe backend
+
+Vibe is installed and authenticated only in the `nooa-swarm` guest.  Its
+project-local wrapper resolves `VIBE_BIN` or `~/.local/bin/vibe`, then retains
+combined role output in `.swarmforge/agent-logs/` with restrictive permissions.
+It does not configure a provider or model: those remain Vibe-owned guest state.
+
+Before a Vibe-backed run, from the Mac host run:
+
+```bash
+./scripts/verify-vibe-in-lima.sh
+```
+
+The check prints only Vibe's version and whether non-empty authentication state
+is present. It never reads, copies, or prints `~/.vibe/.env` or Vibe's
+configuration. The shared SwarmForge backend invokes Vibe programmatically
+with `--trust --agent accept-edits --output streaming -p`; bounded smoke runs
+must additionally set explicit turn, token, and price limits. Do not add
+`--auto-approve` or `--yolo` as defaults.
