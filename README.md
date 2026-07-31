@@ -95,7 +95,7 @@ with `--trust --agent accept-edits --output streaming -p`; bounded smoke runs
 must additionally set explicit turn, token, and price limits. Do not add
 `--auto-approve` or `--yolo` as defaults.
 
-For the bounded Vibe sender → OpenCode receiver handoff smoke (which leaves
+For the bounded Vibe sender → Codex receiver handoff smoke (which leaves
 Vibe's approval boundary intact), first confirm the project is clean and
 pushed, then run:
 
