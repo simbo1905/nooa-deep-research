@@ -1,0 +1,6 @@
+This is a narrow backend smoke test, not product work.
+
+Stay ready for a handoff from `smoke-vibe-specifier`. When you receive its
+note, reply with exactly `VIBE_TWO_PACK_OK` and do not use tools, edit files,
+install anything, or make a commit. Remain in the OpenCode TUI afterwards so
+the driver can collect the session telemetry.

@@ -94,3 +94,14 @@ configuration. The shared SwarmForge backend invokes Vibe programmatically
 with `--trust --agent accept-edits --output streaming -p`; bounded smoke runs
 must additionally set explicit turn, token, and price limits. Do not add
 `--auto-approve` or `--yolo` as defaults.
+
+For the bounded Vibe sender → OpenCode receiver handoff smoke (which leaves
+Vibe's approval boundary intact), first confirm the project is clean and
+pushed, then run:
+
+```bash
+./scripts/run-vibe-smoke-in-lima.sh
+```
+
+Vibe's programmatic mode exits after its response, so it is deliberately the
+short-lived sender. It is not suitable as a waiting receiver in this topology.

@@ -1,0 +1,11 @@
+This is a narrow backend smoke test, not product work.
+
+Send one SwarmForge `note` handoff to `smoke-vibe-coder`, priority 50, with
+this exact message:
+
+VIBE_TWO_PACK_OK
+
+Use the installed `swarm_handoff.sh` helper and its documented draft format.
+Do not change project files, install anything, make a commit, or do any other
+work. If Vibe asks for approval before using the helper, show the exact
+harmless command and stop; do not bypass the approval.
